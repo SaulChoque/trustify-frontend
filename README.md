@@ -1,80 +1,124 @@
-# 🏗 Scaffold-ETH 2
+# Trustify Frontend
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+This is a Scaffold-ETH 2 (SE-2) project built with NextJS, RainbowKit, Wagmi and TypeScript. It supports Hardhat and Foundry for smart contract development.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+## Quick Start
 
-⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
+### Prerequisites
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+- Node.js >= 20.18.3
+- Yarn 3.2.3
+- Windows PowerShell (for Windows users)
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+### Installation
 
-## Requirements
-
-Before you begin, you need to install the following tools:
-
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
-
-## Quickstart
-
-To get started with Scaffold-ETH 2, follow the steps below:
-
-1. Install dependencies if it was skipped in CLI:
-
-```
-cd my-dapp-example
+1. Install dependencies:
+```bash
 yarn install
 ```
 
-2. Run a local network in the first terminal:
+### Running the Project
 
-```
+#### Option 1: With Mock Blockchain (Recommended for Windows without Foundry)
+
+1. Start the mock blockchain:
+```bash
 yarn chain
 ```
 
-This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
-
-3. On a second terminal, deploy the test contract:
-
-```
+2. Deploy mock contracts:
+```bash
 yarn deploy
 ```
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
-
-4. On a third terminal, start your NextJS app:
-
-```
+3. Start the frontend:
+```bash
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+4. Open your browser and navigate to `http://localhost:3000`
 
-Run smart contract test with `yarn foundry:test`
+#### Option 2: With Real Foundry (Requires Foundry installation)
 
-- Edit your smart contracts in `packages/foundry/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/foundry/script`
+1. Install Foundry (see [Foundry Installation Guide](https://book.getfoundry.sh/getting-started/installation))
+2. Start the local blockchain:
+```bash
+yarn chain
+```
 
+3. Deploy contracts:
+```bash
+yarn deploy
+```
 
-## Documentation
+4. Start the frontend:
+```bash
+yarn start
+```
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+### Project Structure
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+- `packages/foundry/` - Smart contracts and deployment scripts
+- `packages/nextjs/` - Frontend application
+- `packages/foundry/contracts/` - Solidity smart contracts
+- `packages/foundry/script/` - Deployment scripts
+- `packages/nextjs/app/` - Next.js application pages
+- `packages/nextjs/components/` - React components
 
-## Contributing to Scaffold-ETH 2
+### Available Scripts
 
-We welcome contributions to Scaffold-ETH 2!
+- `yarn chain` - Start local blockchain (mock or real)
+- `yarn deploy` - Deploy contracts
+- `yarn start` - Start frontend development server
+- `yarn start-project` - One-click project starter (Windows)
+- `yarn build` - Build frontend for production
+- `yarn test` - Run smart contract tests
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+### Smart Contract Development
+
+The project includes a sample contract `YourContract.sol` with the following features:
+- Greeting management
+- Premium features
+- User counters
+- Withdrawal functionality
+
+### Frontend Features
+
+- Wallet connection with RainbowKit
+- Contract interaction UI
+- Debug interface at `/debug`
+- Block explorer at `/blockexplorer`
+- **Admin Panel** at `/admin` - Management interface for certifications, users, and authorizers
+
+### Troubleshooting
+
+#### Windows Users
+If you encounter issues with Foundry installation on Windows:
+1. Use the mock blockchain option (Option 1 above)
+2. Install Visual Studio Build Tools if you want to use real Foundry
+3. Consider using WSL2 for a Linux environment
+
+#### Common Issues
+- If the frontend shows connection errors, make sure the blockchain is running
+- If contracts don't deploy, check that the blockchain is accessible
+- For wallet connection issues, ensure you have a Web3 wallet installed
+
+### Development
+
+To add new contracts:
+1. Create your contract in `packages/foundry/contracts/`
+2. Create deployment script in `packages/foundry/script/`
+3. Update the main deployment script `packages/foundry/script/Deploy.s.sol`
+4. Deploy with `yarn deploy`
+
+### Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.

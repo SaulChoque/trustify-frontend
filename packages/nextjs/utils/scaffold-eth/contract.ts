@@ -29,7 +29,7 @@ import {
 import { Config, UseReadContractParameters, UseWatchContractEventParameters, UseWriteContractParameters } from "wagmi";
 import { WriteContractParameters, WriteContractReturnType, simulateContract } from "wagmi/actions";
 import { WriteContractVariables } from "wagmi/query";
-import deployedContractsData from "~~/contracts/deployedContracts";
+import { deployedContracts as deployedContractsData } from "~~/contracts/deployedContracts";
 import externalContractsData from "~~/contracts/externalContracts";
 import scaffoldConfig from "~~/scaffold.config";
 
@@ -44,12 +44,32 @@ const deepMergeContracts = <L extends Record<PropertyKey, any>, E extends Record
   external: E,
 ) => {
   const result: Record<PropertyKey, any> = {};
-  const allKeys = Array.from(new Set([...Object.keys(external), ...Object.keys(local)]));
+  
+  // Handle null/undefined values safely
+  const localKeys = local ? Object.keys(local) : [];
+  const externalKeys = external ? Object.keys(external) : [];
+  
+  const allKeys = Array.from(new Set([...externalKeys, ...localKeys]));
+  
   for (const key of allKeys) {
-    if (!external[key]) {
-      result[key] = local[key];
+    if (!external || !external[key]) {
+      if (local && local[key]) {
+        result[key] = local[key];
+      }
       continue;
     }
+    
+    if (!local || !local[key]) {
+      const amendedExternal = Object.fromEntries(
+        Object.entries(external[key] as Record<string, Record<string, unknown>>).map(([contractName, declaration]) => [
+          contractName,
+          { ...declaration, external: true },
+        ]),
+      );
+      result[key] = amendedExternal;
+      continue;
+    }
+    
     const amendedExternal = Object.fromEntries(
       Object.entries(external[key] as Record<string, Record<string, unknown>>).map(([contractName, declaration]) => [
         contractName,

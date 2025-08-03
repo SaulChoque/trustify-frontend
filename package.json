@@ -8,6 +8,7 @@
     ]
   },
   "scripts": {
+    "start-project": "powershell -ExecutionPolicy Bypass -File start-project.ps1",
     "account": "yarn foundry:account",
     "account:generate": "yarn foundry:generate",
     "account:import": "yarn foundry:account-import",
